@@ -7,4 +7,8 @@ typedef struct No {
 
 No *aloca_no(int chave);
 
+No *retorna_pai(No *arvore, int chave);
+
+No *insere_no(No **arvore, int chave);
+
 void imprime_no (No *no);
