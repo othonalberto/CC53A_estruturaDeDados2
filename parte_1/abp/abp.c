@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 #include "abp.h"
 
 No *aloca_no(int chave) {
@@ -12,34 +13,60 @@ No *aloca_no(int chave) {
     return novo;
 }
 
-No *retorna_pai(No *arvore, int chave) {
+No **retorna_campo(No *arvore, int chave) {
     if(arvore == NULL) return NULL;
 
-    while(arvore != NULL) {
-        if(chave < arvore->chave) {
-            if(arvore->esq == NULL) return arvore;
-            else arvore = arvore->esq;
-        } else {
-            if(arvore->dir == NULL) return arvore;
-            else arvore = arvore->dir;
-        }
+    if(chave < arvore->chave) {
+        if(arvore->esq == NULL)
+            return &(arvore->esq);
+        else
+            return retorna_campo(arvore->esq, chave);
+    } else {
+        if(arvore->dir == NULL)
+            return &(arvore->dir);
+        else
+            return retorna_campo(arvore->dir, chave);
     }
-    return NULL;
 }
 
 No *insere_no(No **arvore, int chave) {
-    No *pai = retorna_pai(*arvore, chave);
+    No **campo = retorna_campo(*arvore, chave);
     
-    if(chave < pai->chave) {
-        pai->esq = aloca_no(chave);
-        return pai->esq;
-    } else {
-        pai->dir = aloca_no(chave);
-        return pai->dir;
+    if(campo == NULL) {
+        *arvore = aloca_no(chave);
+        return *arvore;
     }
+
+    *campo = aloca_no(chave);
+    return *campo;
+}
+
+No *insere_rec(No **arvore, int chave) {
+    assert(arvore); 
+    
+    if(*arvore == NULL) {
+        *arvore = aloca_no(chave);
+        return *arvore;
+    }
+
+    if(chave < (*arvore)->chave) 
+        return insere_rec(&((*arvore)->esq), chave);
+    else
+        return insere_rec(&((*arvore)->dir), chave);
+}
+
+No *busca_no(No *arvore, int chave) {
+    if(arvore == NULL) return NULL;
+
+    if(chave == arvore->chave) return arvore;
+ 
+    if(chave < arvore->chave)
+        return busca_no(arvore->esq, chave);
+    else
+        return busca_no(arvore->dir, chave);
+
 }
 
 void imprime_no(No *no) {
-    printf("Mora em: %p\nValor chave: %d\nDireita: %p\nEsquerda: %p\n\n",
-            no, no->chave, no->dir, no->esq);
+    printf("Mora em: %p\nValor chave: %d\nDireita: %p\nEsquerda: %p\n\n", no, no->chave, no->dir, no->esq);
 }
