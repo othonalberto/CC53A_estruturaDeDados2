@@ -14,19 +14,21 @@ No *aloca_no(int chave) {
 }
 
 No **retorna_campo(No *arvore, int chave) {
-    if(arvore == NULL) return NULL;
-
-    if(chave < arvore->chave) {
-        if(arvore->esq == NULL)
-            return &(arvore->esq);
-        else
-            return retorna_campo(arvore->esq, chave);
-    } else {
-        if(arvore->dir == NULL)
-            return &(arvore->dir);
-        else
-            return retorna_campo(arvore->dir, chave);
+    while(arvore != NULL) {
+        if(chave < arvore->chave) {
+            if(arvore->esq == NULL)
+                return &(arvore->esq);
+            else
+                arvore = arvore->esq;
+        } else {
+            if(arvore->dir == NULL)
+                return &(arvore->dir);
+            else
+                arvore = arvore->dir;
+        }
     }
+    
+     return NULL;
 }
 
 No *insere_no(No **arvore, int chave) {
@@ -68,5 +70,5 @@ No *busca_no(No *arvore, int chave) {
 }
 
 void imprime_no(No *no) {
-    printf("Mora em: %p\nValor chave: %d\nDireita: %p\nEsquerda: %p\n\n", no, no->chave, no->dir, no->esq);
+    printf("Mora em: %p\nValor chave: %d\nEsquerda: %p\nDireita: %p\n\n", no, no->chave, no->esq, no->dir);
 }
