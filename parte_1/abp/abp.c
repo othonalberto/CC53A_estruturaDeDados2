@@ -13,36 +13,6 @@ No *aloca_no(int chave) {
     return novo;
 }
 
-No **retorna_campo(No *arvore, int chave) {
-    while(arvore != NULL) {
-        if(chave < arvore->chave) {
-            if(arvore->esq == NULL)
-                return &(arvore->esq);
-            else
-                arvore = arvore->esq;
-        } else {
-            if(arvore->dir == NULL)
-                return &(arvore->dir);
-            else
-                arvore = arvore->dir;
-        }
-    }
-    
-     return NULL;
-}
-
-No *insere_no(No **arvore, int chave) {
-    No **campo = retorna_campo(*arvore, chave);
-    
-    if(campo == NULL) {
-        *arvore = aloca_no(chave);
-        return *arvore;
-    }
-
-    *campo = aloca_no(chave);
-    return *campo;
-}
-
 No *insere_rec(No **arvore, int chave) {
     assert(arvore); 
     
@@ -54,18 +24,21 @@ No *insere_rec(No **arvore, int chave) {
     if(chave < (*arvore)->chave) 
         return insere_rec(&((*arvore)->esq), chave);
     else
-        return insere_rec(&((*arvore)->dir), chave);
+        if(chave > (*arvore)->chave)
+            return insere_rec(&((*arvore)->dir), chave);
+        else
+            return NULL; //valor chave já existe 
 }
 
-No *busca_no(No *arvore, int chave) {
-    if(arvore == NULL) return NULL;
+No **busca_no(No **arvore, int chave) {
+    if(*arvore == NULL) return NULL;
 
-    if(chave == arvore->chave) return arvore;
+    if(chave == (*arvore)->chave) return arvore;
  
-    if(chave < arvore->chave)
-        return busca_no(arvore->esq, chave);
+    if(chave < (*arvore)->chave)
+        return busca_no(&((*arvore)->esq), chave);
     else
-        return busca_no(arvore->dir, chave);
+        return busca_no(&((*arvore)->dir), chave);
 
 }
 
