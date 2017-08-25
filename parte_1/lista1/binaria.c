@@ -3,22 +3,22 @@
 #include <assert.h>
 
 NoArvBinaria *buscaArvBinRec(NoArvBinaria *raiz, int k) {
-    if(raiz == NULL) return NULL;
+    if (raiz == NULL) return NULL;
 
-    if(raiz->chave == k) return raiz;
+    if (raiz->chave == k) return raiz;
 
-    if(k < raiz->chave)
+    if (k < raiz->chave)
         return buscaArvBinRec(raiz->esq, k);
     else
         return buscaArvBinRec(raiz->dir, k);
 }
 
 NoArvBinaria *buscaArvBinIterativa(NoArvBinaria *raiz, int k) {
-    while(raiz != NULL) {
-        if(raiz->chave == k)
+    while (raiz != NULL) {
+        if (raiz->chave == k)
             return raiz;
         
-        if(k < raiz->chave)
+        if (k < raiz->chave)
             raiz = raiz->esq;
         else
             raiz = raiz->dir;
@@ -37,7 +37,7 @@ NoArvBinaria *buscaEnderecoDoMenor(NoArvBinaria *raiz) {
 }
 
 NoArvBinaria *buscaEnderecoDoMaior(NoArvBinaria *raiz) {
-    if(raiz == NULL) return NULL;
+    if (raiz == NULL) return NULL;
 
     while (raiz->dir != NULL)
         raiz = raiz->dir;
@@ -83,22 +83,26 @@ NoArvBinaria **buscaEnderecoDoPonteiroDoMaior(NoArvBinaria **raiz) {
 void removeFolha(NoArvBinaria **folha) {
     assert(folha);
 
-    if(*folha == NULL) return;
+    if (*folha == NULL) return;
 
     NoArvBinaria *aux = *folha;
-    free(aux);
     *folha = NULL;
+    free(aux);
 }
 
-/*
- * Assume que *raiz != NULL 
- * O no armazenado no endereco *raiz TEM NECESSARIAMENTE
- * UM FILHO ARMAZENADO EM (*raiz)->esq OU (exclusivo) (*raiz)->dir.
- * O procedimento deve remover o no armazenado em *raiz e
- * fazer com que *raiz passe a apontar pelo filho do no a
- * ser removido
- */
-void removeNoComSomenteUmFilho(NoArvBinaria **raiz);
+void removeNoComSomenteUmFilho(NoArvBinaria **raiz) {
+    assert(raiz);
+
+    if((*raiz)->esq != NULL) {
+        NoArvBinaria *aux = *raiz;
+        *raiz = (*raiz)->esq;
+        free(aux);
+    } else {
+        NoArvBinaria *aux = *raiz;
+        *raiz = (*raiz)->dir; 
+        free(aux); 
+    }
+}
 
 /*
  * PROCEDIMENTOS DE INSERCAO
