@@ -93,7 +93,7 @@ void removeFolha(NoArvBinaria **folha) {
 void removeNoComSomenteUmFilho(NoArvBinaria **raiz) {
     assert(raiz);
 
-    if((*raiz)->esq != NULL) {
+    if ((*raiz)->esq != NULL) {
         NoArvBinaria *aux = *raiz;
         *raiz = (*raiz)->esq;
         free(aux);
@@ -104,15 +104,6 @@ void removeNoComSomenteUmFilho(NoArvBinaria **raiz) {
     }
 }
 
-/*
- * PROCEDIMENTOS DE INSERCAO
- * insere um no com chave igual a k numa arvore binaria
- * de pesquisa dada. O no raiz da arvore dada esta armazenado
- * no endereco *raiz. Assuma que a arvore pode estar vazia
- * nesse caso *raiz==NULL.
- * Devolve o endereco do no recem criado ou o endereco do no
- * que ja contenha chave igual a k.
- */
 NoArvBinaria *insereArvBinRec(NoArvBinaria **raiz, int k) {
     assert(raiz);
 
@@ -134,7 +125,27 @@ NoArvBinaria *insereArvBinRec(NoArvBinaria **raiz, int k) {
     else
         return *raiz; //nó já existe
 }
-NoArvBinaria *insereArvBinIterativa(NoArvBinaria **raiz, int k);
+
+NoArvBinaria *insereArvBinIterativa(NoArvBinaria **raiz, int k) {
+    assert(raiz);
+
+    while (*raiz != NULL) {
+        if (k < (*raiz)->chave)
+            *raiz = (*raiz)->esq;
+        else if (k > (*raiz)->chave)
+            *raiz = (*raiz)->dir;
+        else
+            return *raiz;
+    }
+
+    *raiz = (NoArvBinaria*)malloc(sizeof(NoArvBinaria));
+    if(*raiz == NULL) return NULL;
+
+    (*raiz)->esq = NULL;
+    (*raiz)->dir = NULL;
+    (*raiz)->chave = k;
+
+    return *raiz;
+}
 
 void removeArvBinRec(NoArvBinaria **raiz, int k);
-

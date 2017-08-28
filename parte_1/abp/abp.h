@@ -23,6 +23,9 @@ No *insere_rec(No **arvore, int chave);
 // busca um nó com campo chave x e retorna seu endereço
 No **busca_no(No **arvore, int chave);
 
+// remove um nó da árvore
+void remove_no(No **arvore, int chave);
+
 // imprime endereço, valor chave, filho esquerdo e filho direito de um nó
 void imprime_no (No *no);
 

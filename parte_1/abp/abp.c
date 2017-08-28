@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include "abp.h"
+#include "outras.h"
 
 No *aloca_no(int chave) {
     No *novo = (No*)malloc(sizeof(No));
@@ -40,6 +41,35 @@ No **busca_no(No **arvore, int chave) {
     else
         return busca_no(&((*arvore)->dir), chave);
 
+}
+
+void remove_no(No **arvore, int chave) {
+    No **pp = busca_no(arvore, chave);
+    No *filho = NULL;
+
+    //Caso 1: nó folha
+    if ((*pp)->esq == NULL && (*pp)->dir == NULL) {
+        free(*pp);
+        *pp = NULL;
+        return;
+    }
+
+    //Caso 2: apenas um filho
+    if (((*pp)->esq == NULL) != ((*pp)->dir == NULL)) {
+        filho = ((*pp)->esq == NULL) ? (*pp)->dir : (*pp)->esq;
+
+        free(*pp);
+        *pp = filho;
+        return;
+    }
+
+    //Caso 3: dois filhos
+    if ((*pp)->esq && (*pp)->dir) {
+        No **substituto = busca_endereco_ponteiro_menor(&((*arvore)->dir));
+        substitui_dados(pp, substituto);
+        remove_no(substituto, (*substituto)->chave); //entrará no caso 2, e será 0(1)
+        return;
+    }
 }
 
 void imprime_no(No *no) {

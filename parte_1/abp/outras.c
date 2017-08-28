@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <assert.h>
 #include "outras.h"
 
 No **retorna_campo(No *arvore, int chave) {
@@ -31,4 +32,18 @@ No *insere_no(No **arvore, int chave) {
     return *campo;
 }
 
+void substitui_dados(No **p1, No **p2) {
+    (*p1)->chave = (*p2)->chave;
+}
+
+No **busca_endereco_ponteiro_menor(No **arvore) {
+    assert(arvore);
+
+    if(*arvore == NULL) return NULL;
+
+    if ((*arvore)->esq == NULL)
+        return arvore;
+    else
+        return busca_endereco_ponteiro_menor(&((*arvore)->esq));
+}
 
