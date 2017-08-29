@@ -27,6 +27,6 @@ No **busca_no(No **arvore, int chave);
 void remove_no(No **arvore, int chave);
 
 // imprime endereço, valor chave, filho esquerdo e filho direito de um nó
-void imprime_no (No *no);
+void imprime_no(No *no);
 
 #endif

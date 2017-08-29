@@ -26,4 +26,7 @@ void substitui_dados(No **p1, No **p2);
 // retorna o ponteiro do ponteiro para o menor nó da subarvore
 No **busca_endereco_ponteiro_menor(No **arvore);
 
+// retorna o ponteiro do ponteiro para o maior nó da subarvore
+No **busca_endereco_ponteiro_maior(No **arvore);
+
 #endif

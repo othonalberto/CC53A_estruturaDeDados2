@@ -16,27 +16,27 @@ No *aloca_no(int chave) {
 
 No *insere_rec(No **arvore, int chave) {
     assert(arvore); 
-    
-    if(*arvore == NULL) {
+ 
+    if (*arvore == NULL) {
         *arvore = aloca_no(chave);
         return *arvore;
     }
 
-    if(chave < (*arvore)->chave) 
+    if (chave < (*arvore)->chave)
         return insere_rec(&((*arvore)->esq), chave);
     else
-        if(chave > (*arvore)->chave)
+        if (chave > (*arvore)->chave)
             return insere_rec(&((*arvore)->dir), chave);
         else
             return NULL; //valor chave já existe 
 }
 
 No **busca_no(No **arvore, int chave) {
-    if(*arvore == NULL) return NULL;
+    if (*arvore == NULL) return NULL;
 
-    if(chave == (*arvore)->chave) return arvore;
+    if (chave == (*arvore)->chave) return arvore;
  
-    if(chave < (*arvore)->chave)
+    if (chave < (*arvore)->chave)
         return busca_no(&((*arvore)->esq), chave);
     else
         return busca_no(&((*arvore)->dir), chave);
