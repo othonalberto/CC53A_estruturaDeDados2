@@ -11,8 +11,6 @@ struct NoArvBinaria
 };
 
 typedef struct NoArvBinaria NoArvBinaria;
-NoArvBinaria *insere_rec(NoArvBinaria **arvore, int chave); 
-
 
 /*
  * PROCEDIMENTOS DE BUSCA CLASSICOS

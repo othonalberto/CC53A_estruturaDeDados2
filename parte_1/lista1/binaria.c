@@ -132,6 +132,7 @@ NoArvBinaria *insereArvBinIterativa(NoArvBinaria **raiz, int k) {
     while (*raiz != NULL) {
         if (k < (*raiz)->chave)
             *raiz = (*raiz)->esq;
+        
         else if (k > (*raiz)->chave)
             *raiz = (*raiz)->dir;
         else
@@ -147,5 +148,32 @@ NoArvBinaria *insereArvBinIterativa(NoArvBinaria **raiz, int k) {
 
     return *raiz;
 }
+void removeArvBinRec(NoArvBinaria **raiz, int k) {
+    NoArvBinaria **aremover = buscaEnderecoDoPonteiro(raiz, k);
+    NoArvBinaria *filho = NULL; 
+    // Caso 1: nó folha
+    if ((*aremover)->esq == NULL && (*aremover)->dir == NULL) {
+       free(*aremover);
+       *aremover = NULL;
+       return;
+    }
 
-void removeArvBinRec(NoArvBinaria **raiz, int k);
+    // Caso 2: nó só com um filho
+    if (((*aremover)->esq == NULL) != ((*aremover)->dir == NULL)) {
+        if ((*aremover)->esq != NULL)
+            filho = (*aremover)->esq;
+        else
+            filho = (*aremover)->dir;
+
+        free(*aremover);
+        *aremover = filho;
+        return;
+    }
+    // Caso 3: nó com dois filhos 
+    if ((*aremover)->esq && (*aremover)->dir) {
+        NoArvBinaria **substituto = buscaEnderecoDoPonteiroDoMenor(&(*raiz)->dir);
+        (*aremover)->chave = (*substituto)->chave;
+        removeArvBinRec(substituto, (*substituto)->chave);
+        return;
+    }
+}
