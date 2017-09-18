@@ -75,3 +75,11 @@ void remove_no(No **arvore, int chave) {
 void imprime_no(No *no) {
     printf("Mora em: %p\nValor chave: %d\nEsquerda: %p\nDireita: %p\n\n", no, no->chave, no->esq, no->dir);
 }
+
+void pre_ordem(No *raiz) {
+    if (raiz == NULL) return;
+
+    printf("%d\n", raiz->chave);
+    pre_ordem(raiz->esq);
+    pre_ordem(raiz->dir);
+}

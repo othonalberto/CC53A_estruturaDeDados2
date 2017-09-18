@@ -29,4 +29,7 @@ void remove_no(No **arvore, int chave);
 // imprime endereço, valor chave, filho esquerdo e filho direito de um nó
 void imprime_no(No *no);
 
+// imprime todos os nós da raiz em pre-ordem
+void pre_ordem(No *raiz);
+
 #endif
