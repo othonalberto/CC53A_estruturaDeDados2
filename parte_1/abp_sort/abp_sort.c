@@ -28,7 +28,7 @@ NoABP *insereNo(NoABP **raiz, int k) {
 }
 
 NoABP *passaVetorParaABP(int vetor[], int n, NoABP **raiz) {
-    int i = 0;
+    int i;
     for (i = 0; i < n; i++)
         insereNo(raiz, *(vetor+i));
 
@@ -36,8 +36,6 @@ NoABP *passaVetorParaABP(int vetor[], int n, NoABP **raiz) {
 }
 
 int abp_sort(NoABP *raiz, int v[], int i) {
-    if (raiz == NULL) return i;
-
     if (raiz->esq != NULL)
         i = abp_sort(raiz->esq, v, i);
     
